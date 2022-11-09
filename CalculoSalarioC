@@ -2,18 +2,28 @@
 float salario_bruto, desc_inss, contribuicaoFgts, desc_vt, desc_vr, desc_ir, salario_liquido;
 int opcao;
 const float salarioMinimo = 1212.00;
+float faixaUmInss = 1212.01;
+float faixaDoisInss = 2427.35;
+float faixaTresInssInicial = 2427.36;
+float faixaTresInssFinal = 3641.03;
+
+/*Abaixo estão as faixas salariais do desconto de INSS. Cada uma delas está disposta em uma variável:
+Faixa 1: Salário Mínimo - 1212.00 - 7,5% de desconto;
+Faixa 2: De 1212.01 a 2427.35 - 9% de desconto;
+Faixa 3: De 2427.36 a 3641.03 - 12% de desconto;
+Faixa 4: Acima de 3641.03 - 14% de desconto.*/
 
 float calculoInss(float salario) {
      if (salario_bruto == salarioMinimo){
             desc_inss = (salario_bruto * 0.075);
-     } else if (salario_bruto > salarioMinimo && salario_bruto <= 2427.35) {
+     } else if (salario_bruto > salarioMinimo && salario_bruto <= faixaDoisInss) {
         desc_inss = (((salario_bruto - salarioMinimo) * 0.09) + (salarioMinimo * 0.075));
-     } else if (salario_bruto > 2427.35 && salario_bruto <= 3641.03) {
-        desc_inss = (((salario_bruto - 2427.35) * 0.12) + ((2427.35 - 1212.01) * 0.09) + 
+     } else if (salario_bruto > faixaDoisInss && salario_bruto <= faixaTresInssFinal) {
+        desc_inss = (((salario_bruto - faixaDoisInss) * 0.12) + ((faixaDoisInss - faixaUmInss) * 0.09) + 
         (salarioMinimo * 0.075));
      } else {
-        desc_inss = (((salario_bruto - 3641.03) * 0.14) + ((3641.03 - 2427.36) * 0.12) + 
-        ((2427.35 - 1212.01) * 0.09) + (salarioMinimo * 0.075));
+        desc_inss = (((salario_bruto - faixaTresInssFinal) * 0.14) + ((faixaTresInssFinal - faixaTresInssInicial) * 0.12) + 
+        ((faixaDoisInss - faixaUmInss) * 0.09) + (salarioMinimo * 0.075));
      }
      return desc_inss;
 };
