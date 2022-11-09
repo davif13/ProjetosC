@@ -1,10 +1,25 @@
 #include <stdio.h>
+float salario_bruto, desc_inss, contribuicaoFgts, desc_vt, desc_vr, desc_ir, salario_liquido;
+int opcao;
+const float salarioMinimo = 1212.00;
+
+float calculoInss(salario) {
+     if (salario_bruto === salarioMinimo){
+            desc_inss = (salario_bruto * 0.075);
+     } else if (salario_bruto > salarioMinimo && salario_bruto <= 2427.35) {
+        desc_inss = (((salario_bruto - salarioMinimo) * 0.09) + (salarioMinimo * 0.075));
+     } else if (salario_bruto > 2427.35 && salario_bruto <= 3641.03) {
+        desc_inss = (((salario_bruto - 2427.35) * 0.12) + ((2427.35 - 1212.01) * 0.09) + 
+        (salarioMinimo * 0.075));
+     } else {
+        desc_inss = (((salario_bruto - 3641.03) * 0.14) + ((3641.03 - 2427.36) * 0.12) + 
+        ((2427.35 - 1212.01) * 0.09) + (salarioMinimo * 0.075));
+     }
+     return desc_inss;
+};
 
 int main()
-{
-    float salario_bruto, desc_inss, desc_fgts, desc_vt, desc_vr, desc_ir, salario_liquido;
-    int opcao;
-    
+{    
     printf("\nDigite o salario bruto: ");
     scanf("%f", &salario_bruto);
     
@@ -17,16 +32,10 @@ int main()
             
         case 2:
         //Cálculo do FGTS
-            desc_fgts = (salario_bruto * 0.08);
+            contribuicaoFgts = (salario_bruto * 0.08);
         
         //Cálculo do INSS
-        if (salario_bruto <= 1212.00){
-            desc_inss = (salario_bruto * 0.075);
-        } else if (salario_bruto <= 2427.35){
-                   desc_inss = (salario_bruto * 0.09);
-            } else {
-            desc_inss = (salario_bruto * 0.14);
-        }
+            calculoInss(salario_bruto);
         
         //Cálculo Vale Refeição
         desc_vr = (salario_bruto * 0.03);
@@ -43,12 +52,12 @@ int main()
         } else {
             desc_ir = (salario_bruto * 0.275);
         }
-        printf("\nDesconto FGTS: %.2f", desc_fgts);
+        printf("\nContribuição FGTS: %.2f", contribuicaoFgts);
         printf("\nDesconto INSS: %.2f", desc_inss);
         printf("\nDesconto IR: %.2f", desc_ir);
         printf("\nDesconto VT: %.2f", desc_vt);
         printf("\nDesconto VR: %.2f", desc_vr);
-        printf("\nSalário Líquido: %.2f", salario_liquido = (salario_bruto - desc_fgts - desc_inss - desc_vr - desc_vt - desc_ir));
+        printf("\nSalário Líquido: %.2f", salario_liquido = (salario_bruto - desc_inss - desc_vr - desc_vt - desc_ir));
     }
     return 0;
 }
